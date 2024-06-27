@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongodb
+  name: mongodb-notifications
   namespace: books-platform
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mongodb
+      app: mongodb-notifications
   template:
     metadata:
       labels:
-        app: mongodb
+        app: mongodb-notifications
     spec:
       containers:
-        - name: mongodb
+        - name: mongodb-notifications
           image: mongo
           ports:
             - containerPort: 27017
       volumes:
         - name: init-script
           configMap:
-            name: mongo-notifications-init-config
+            name: mongo-init-config

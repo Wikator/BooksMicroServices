@@ -10,7 +10,7 @@ class BookChangedListener < ApplicationJob
     )
     connection.start
     channel = connection.create_channel
-    queue = channel.queue('book-changed')
+    queue = channel.queue('book-changed', durable: true)
 
     queue.subscribe(block: true) do |delivery_info, properties, body|
       puts delivery_info, properties, body

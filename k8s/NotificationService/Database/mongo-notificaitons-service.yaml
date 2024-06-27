@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-notifications
+  namespace: books-platform
+spec:
+  selector:
+    app: mongodb-notifications
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017

@@ -10,7 +10,7 @@ class BookDeletedListener < ApplicationJob
     )
     connection.start
     channel = connection.create_channel
-    queue = channel.queue('book-deleted')
+    queue = channel.queue('book-deleted', durable: true)
 
     queue.subscribe(block: true) do |delivery_info, properties, body|
       puts delivery_info, properties, body

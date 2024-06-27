@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification-service-api
+  namespace: books-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: notification-service-api
+  template:
+    metadata:
+      labels:
+        app: notification-service-api
+    spec:
+      containers:
+        - name: notification-service-api
+          image: wikator/notification-service:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080

@@ -13,11 +13,11 @@ GET http://192.168.49.2:31001/order_items
 
 ###
 
-PUT http://192.168.49.2:31000/api/books/667d757368614b5b1611ea9a
+PUT http://192.168.49.2:31000/api/books/667ddb54564aaf63832ecd2b
 Content-Type: application/json
 
 {
-  "id": "667d757368614b5b1611ea9a",
+  "id": "667ddb54564aaf63832ecd2b",
   "title":"The Catcher in the Rye",
   "author":"J.D. Salinger4",
   "price":10.99,
