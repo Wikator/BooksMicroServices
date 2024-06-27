@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-deployment
+  namespace: books-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rabbitmq
+  template:
+    metadata:
+      labels:
+        app: rabbitmq
+    spec:
+      containers:
+        - name: rabbitmq
+          image: rabbitmq:3.8.23-management-alpine
+          ports:
+            - containerPort: 5672  # RabbitMQ default port for AMQP
+            - containerPort: 15672 # RabbitMQ Management UI port
+          env:
+            - name: RABBITMQ_DEFAULT_USER
+              value: admin          # RabbitMQ username
+            - name: RABBITMQ_DEFAULT_PASS
+              value: password       # RabbitMQ password
+          resources:
+            limits:
+              memory: "512Mi"      # Adjust resource limits as needed
+              cpu: "500m"          # Adjust CPU limits as needed
+            requests:
+              memory: "256Mi"      # Adjust resource requests as needed
+              cpu: "100m"          # Adjust CPU requests as needed

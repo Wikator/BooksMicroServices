@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-service-api
+  namespace: books-platform
+  labels:
+    app: orders-service-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orders-service-api
+  template:
+    metadata:
+      labels:
+        app: orders-service-api
+    spec:
+      containers:
+        - name: orders-service-api
+          imagePullPolicy: Always
+          image: wikator/orders-service:latest
+          env:
+            - name: DATABASE_HOST
+              value: postgres
+            - name: DATABASE_NAME
+              value: orders
+            - name: DATABASE_USER
+              value: test
+            - name: DATABASE_PASSWORD
+              value: password
+            - name: SECRET_KEY_BASE
+              value: 3374659e84baa959bc348392f70fa3a7d94d2888c66b0593b07afed5db3e7b4a365ae135cf1492bfbeaf7611769e7f1d8d591247ad919a4e7d0ea63923989697
+            - name: RABBITMQ_HOST
+              value: rabbitmq.books-platform
+            - name: RABBITMQ_USERNAME
+              value: admin
+            - name: RABBITMQ_PASSWORD
+              value: password
+          ports:
+            - containerPort: 3000

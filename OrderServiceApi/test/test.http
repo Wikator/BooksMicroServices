@@ -1,0 +1,34 @@
+POST http://192.168.49.2:31001/order_items
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "quantity": 20,
+  "book_id": "667d9401de549ae0629db79d"
+}
+
+###
+
+GET http://192.168.49.2:31001/order_items
+
+###
+
+PUT http://192.168.49.2:31000/api/books/667d757368614b5b1611ea9a
+Content-Type: application/json
+
+{
+  "id": "667d757368614b5b1611ea9a",
+  "title":"The Catcher in the Rye",
+  "author":"J.D. Salinger4",
+  "price":10.99,
+  "stock":50
+}
+
+###
+
+DELETE http://192.168.49.2:31001/order_items/3
+Accept: application/json
+
+###
+
+DELETE http://192.168.49.2:31000/api/books/667d9401de549ae0629db79d

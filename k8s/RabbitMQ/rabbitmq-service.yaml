@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rabbitmq
+  namespace: books-platform
+spec:
+  selector:
+    app: rabbitmq
+  ports:
+    - name: amqp
+      port: 5672     # Port for AMQP protocol
+      targetPort: 5672
+    - name: management
+      port: 15672    # Port for RabbitMQ Management UI
+      targetPort: 15672
+  type: ClusterIP   # Use ClusterIP type for internal access within the cluster

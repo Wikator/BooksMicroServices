@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: books-frontend
+  namespace: books-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: books-frontend
+  template:
+    metadata:
+      labels:
+        app: books-frontend
+    spec:
+      containers:
+        - name: books-frontend
+          image: wikator/books-frontend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4200
+#          resources:
+#            requests:
+#              memory: "256Mi"
+#              cpu: "100m"
+#            limits:
+#              memory: "512Mi"
+#              cpu: "200m"

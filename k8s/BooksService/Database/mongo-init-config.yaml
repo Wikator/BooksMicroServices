@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-init-config
+  namespace: books-platform
+data:
+  init-mongo.js: |
+    db = db.getSiblingDB('BookStore');
+    db.createCollection('Books');
+  
