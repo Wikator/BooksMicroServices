@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "user_id": 1,
   "quantity": 20,
-  "book_id": "667d9401de549ae0629db79d"
+  "book_id": "667e8f0be816389a909d8c21"
 }
 
 ###
@@ -13,13 +13,13 @@ GET http://192.168.49.2:31001/order_items
 
 ###
 
-PUT http://192.168.49.2:31000/api/books/667ddb54564aaf63832ecd2b
+PUT http://192.168.49.2:31000/api/books/667e8f0be816389a909d8c20
 Content-Type: application/json
 
 {
-  "id": "667ddb54564aaf63832ecd2b",
+  "id": "667e8f0be816389a909d8c20",
   "title":"The Catcher in the Rye",
-  "author":"J.D. Salinger4",
+  "author":"J.D. Salinger5",
   "price":10.99,
   "stock":50
 }
@@ -31,4 +31,4 @@ Accept: application/json
 
 ###
 
-DELETE http://192.168.49.2:31000/api/books/667d9401de549ae0629db79d
+DELETE http://192.168.49.2:31000/api/books/667e8f0be816389a909d8c20

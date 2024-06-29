@@ -1,3 +1,5 @@
+using RabbitMQ.Client;
+
 namespace BooksServiceApi.Publishers;
 
-public class BookChangedPublisher() : PublisherBase("book-changed");
+public class BookChangedPublisher(IConnection connection) : PublisherBase(connection, "book-changed");

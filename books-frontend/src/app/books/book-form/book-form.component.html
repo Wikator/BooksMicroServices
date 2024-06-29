@@ -1,0 +1,64 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          Book
+        </div>
+        <div class="card-body">
+          <form [formGroup]="bookForm" (ngSubmit)="bookForm.valid && submit()">
+            <div class="form-group mb-2">
+              <label for="title">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="bookForm.controls['title'].touched && bookForm.controls['title'].invalid"
+                id="title"
+                formControlName="title" />
+              @if(bookForm.controls['title'].errors?.['required']) {
+                <div class="invalid-feedback">Title is required</div>
+              }
+            </div>
+            <div class="form-group mb-2">
+              <label for="author">Author</label>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="bookForm.controls['author'].touched
+                  && bookForm.controls['author'].invalid"
+                id="author"
+                formControlName="author" />
+              @if(bookForm.controls['author'].errors?.['required']) {
+                <div class="invalid-feedback">Author is required</div>
+              }
+            </div>
+            <div class="form-group mb-2">
+              <label for="price">Price</label>
+              <input
+                type="number"
+                class="form-control"
+                [class.is-invalid]="bookForm.controls['price'].touched
+                  && bookForm.controls['price'].invalid"
+                id="price"
+                formControlName="price" />
+            </div>
+            <div class="form-group mb-2">
+              <label for="stock">Stock</label>
+              <input
+                type="number"
+                class="form-control"
+                [class.is-invalid]="bookForm.controls['stock'].touched
+                  && bookForm.controls['stock'].invalid"
+                id="stock"
+                formControlName="stock" />
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [class.disabled]="bookForm.invalid">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

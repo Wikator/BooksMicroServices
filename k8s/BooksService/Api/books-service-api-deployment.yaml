@@ -4,7 +4,7 @@ metadata:
   name: books-service-api
   namespace: books-platform
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: books-service-api
@@ -17,6 +17,12 @@ spec:
         - name: books-service-api
           image: wikator/books-service:latest
           imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 10
           ports:
             - containerPort: 8080
           resources:

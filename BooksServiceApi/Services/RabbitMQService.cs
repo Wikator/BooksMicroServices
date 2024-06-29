@@ -6,23 +6,12 @@ using RabbitMQ.Client.Events;
 
 namespace BooksServiceApi.Services;
 
-public class OrderDeletedBackgroundService(BooksService booksService) : BackgroundService
+public class OrderDeletedBackgroundService(IConnection connection, BooksService booksService) : BackgroundService
 {
-    private const string HostName = "rabbitmq.books-platform"; // RabbitMQ service name in Kubernetes
     private const string QueueName = "order-deleted";
-    private const string UserName = "admin";
-    private const string Password = "password";
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        var factory = new ConnectionFactory
-        {
-            HostName = HostName,
-            UserName = UserName,
-            Password = Password
-        };
-
-        using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
         
         channel.QueueDeclare(queue: QueueName,
