@@ -17,34 +17,44 @@ class OrderItemsController < ApplicationController
 
   def create
     unless params[:book_id].present? && params[:quantity].present? && params[:user_id].present?
-      render json: { error: "Missing required parameters" }, status: :unprocessable_entity
+      render json: { error: 'Missing required parameters' }, status: :unprocessable_entity
       return
     end
 
-    response = self.class.put("/place-order",
+    response = self.class.put('/place-order',
                               body: {
                                 bookId: params[:book_id],
                                 quantity: params[:quantity]
                               }.to_json,
-                              headers: { 'Content-Type' => 'application/json' }
-    )
+                              headers: { 'Content-Type' => 'application/json' })
 
     if response.success?
       book = JSON.parse(response.body)
       order = Order.find_or_create_by(user_id: params[:user_id])
 
-      order_item = order.order_items.create(
-        book_id: book['id'],
-        title: book['title'],
-        author: book['author'],
-        price: book['price'],
-        quantity: params[:quantity]
-      )
+      # Find the existing order item for the book, if it exists
+      order_item = order.order_items.find_by(book_id: book['id'])
 
-      if order_item.persisted?
+      if order_item
+        # If the order item exists, update the quantity
+        order_item.quantity += params[:quantity].to_i
+        success = order_item.save
+      else
+        # If the order item does not exist, create a new one
+        order_item = order.order_items.create(
+          book_id: book['id'],
+          title: book['title'],
+          author: book['author'],
+          price: book['price'],
+          quantity: params[:quantity]
+        )
+        success = order_item.persisted?
+      end
+
+      if success
         render json: order
       else
-        render json: { error: "Failed to create order item" }, status: :unprocessable_entity
+        render json: { error: 'Failed to create or update order item' }, status: :unprocessable_entity
       end
     else
       render json: { error: response.code }, status: :bad_request
@@ -53,23 +63,22 @@ class OrderItemsController < ApplicationController
 
   def update
     unless params[:book_id].present? && params[:quantity].present?
-      render json: { error: "Missing required parameters" }, status: :unprocessable_entity
+      render json: { error: 'Missing required parameters' }, status: :unprocessable_entity
       return
     end
 
-    response = self.class.put("/place-order",
+    response = self.class.put('/place-order',
                               body: {
                                 bookId: params[:book_id],
                                 quantity: params[:quantity]
                               }.to_json,
-                              headers: { 'Content-Type' => 'application/json' }
-    )
+                              headers: { 'Content-Type' => 'application/json' })
 
     if response.success?
       if @order_item.update(quantity: params[:quantity])
         render json: order
       else
-        render json: { error: "Failed to create order item" }, status: :unprocessable_entity
+        render json: { error: 'Failed to create order item' }, status: :unprocessable_entity
       end
     else
       render json: { error: response.code }, status: :bad_request

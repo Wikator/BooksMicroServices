@@ -17,5 +17,11 @@ spec:
         - name: notification-service-api
           image: wikator/notification-service:latest
           imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: "/healthz"
+            periodSeconds: 10
+            initialDelaySeconds: 10
           ports:
             - containerPort: 8080

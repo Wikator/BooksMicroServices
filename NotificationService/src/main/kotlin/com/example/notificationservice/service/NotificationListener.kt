@@ -13,7 +13,7 @@ class NotificationListener(
     private val messagingTemplate: SimpMessagingTemplate
 ) {
     
-    @RabbitListener(queues = ["book-changed"])
+    @RabbitListener(queues = ["book-changed-notifications"])
     fun receiveMessage(message: String) {
         println(message)
         

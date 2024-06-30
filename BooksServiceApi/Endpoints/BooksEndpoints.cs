@@ -55,7 +55,7 @@ public static class BooksEndpoints
         
         await service.UpdateAsync(id, book);
         
-        publisher.Publish(book);
+        publisher.Publish(book, "book-changed-orders", "book-changed-notifications");
         return TypedResults.Ok(book);
     }
     
@@ -67,7 +67,7 @@ public static class BooksEndpoints
         
         await service.RemoveAsync(id);
         
-        publisher.Publish(id);
+        publisher.Publish(id, "book-deleted-orders", "book-deleted-notifications");
         return TypedResults.NoContent();
     }
 

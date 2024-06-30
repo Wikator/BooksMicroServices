@@ -29,7 +29,7 @@ export class BookListComponent implements OnInit {
   placeOrder(bookId: string) {
     const order: OrderUpsert = { book_id: bookId, quantity: 1, user_id: 1 }
     this.ordersService.create(order).subscribe({
-      next: _ => this.books = this.books.map(b => b.id !== bookId ? b : { id: b.id, author: b.author, title: b.author, price: b.price, stock: b.stock - 1} )
+      next: _ => this.books = this.books.map(b => b.id !== bookId ? b : { id: b.id, author: b.author, title: b.title, price: b.price, stock: b.stock - 1} )
     })
   }
 }

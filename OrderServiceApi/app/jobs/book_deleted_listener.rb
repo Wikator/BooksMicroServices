@@ -4,7 +4,10 @@ class BookDeletedListener < ApplicationJob
   def perform(*args)
     connection = RabbitmqConnection.instance.connection
     channel = connection.create_channel
-    queue = channel.queue('book-deleted', durable: true)
+
+    exchange = channel.direct('book-delete-exchange', durable: true)
+    queue = channel.queue('book-deleted-orders', durable: true)
+    queue.bind(exchange, routing_key: 'book-deleted-orders')
 
     queue.subscribe(block: true) do |delivery_info, properties, body|
       puts delivery_info, properties, body

@@ -34,7 +34,7 @@ export class BookUpdateComponent implements OnInit {
       return;
 
     this.bookService.updateBook(this.id, book).subscribe(() => {
-      this.router.navigate(['/books']);
+      this.router.navigateByUrl("/");
     });
   }
 }

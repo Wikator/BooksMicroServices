@@ -9,21 +9,21 @@ public abstract class PublisherBase
 {
     private readonly IModel _channel;
 
-    private readonly string _queueName;
+    private readonly string _exchangeName;
 
-    protected PublisherBase(IConnection connection, string queueName)
+    protected PublisherBase(IConnection connection, string exchangeName)
     {
         _channel = connection.CreateModel();
-        _channel.QueueDeclare(queue: queueName,
+        _channel.ExchangeDeclare(exchange: exchangeName,
+            type: "direct",
             durable: true,
-            exclusive: false,
             autoDelete: false,
             arguments: null);
 
-        _queueName = queueName;
+        _exchangeName = exchangeName;
     }
 
-    public void Publish(object book)
+    public void Publish(object book, params string[] routingKeys)
     {
         var message = book switch
         {
@@ -33,10 +33,13 @@ public abstract class PublisherBase
         };
         var body = Encoding.UTF8.GetBytes(message);
 
-        _channel.BasicPublish(exchange: string.Empty,
-            routingKey: _queueName,
-            basicProperties: null,
-            body: body);
+        foreach (var routingKey in routingKeys)
+        {
+            _channel.BasicPublish(exchange: _exchangeName,
+                routingKey: routingKey,
+                basicProperties: null,
+                body: body);
+        }
         
         Console.WriteLine($" [x] Sent {message}");
     }
