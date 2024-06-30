@@ -21,7 +21,7 @@ spec:
           image: wikator/orders-service:latest
           livenessProbe:
             httpGet:
-              path: /up
+              path: /healthz
               port: 3000
             initialDelaySeconds: 5
             periodSeconds: 5

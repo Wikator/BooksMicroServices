@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environemnt";
 import {HttpClient} from "@angular/common/http";
 import Book from "../_models/book";
-import BookUpsert from "../_models/bookUpsert";
+import BookUpsert from "../_models/book-upsert";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class BookService {
   }
 
   getBookById(id: number) {
-    return this.httpClient.get<Book>(this.baseUrl + id);
+    return this.httpClient.get<Book | null>(this.baseUrl + id);
   }
 
   addBook(book: BookUpsert) {
@@ -28,7 +28,7 @@ export class BookService {
     return this.httpClient.put<Book>(this.baseUrl + id, book);
   }
 
-  deleteBook(id: number) {
+  deleteBook(id: string) {
     return this.httpClient.delete(this.baseUrl + id);
   }
 }

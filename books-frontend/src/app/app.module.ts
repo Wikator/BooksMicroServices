@@ -9,13 +9,17 @@ import { BookListComponent } from './books/book-list/book-list.component';
 import { BookFormComponent } from './books/book-form/book-form.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { BookNewComponent } from './books/book-new/book-new.component';
+import { BookUpdateComponent } from './books/book-update/book-update.component';
+import { OrdersListComponent } from './orders/orders-list/orders-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BookListComponent,
     BookFormComponent,
-    BookNewComponent
+    BookNewComponent,
+    BookUpdateComponent,
+    OrdersListComponent
   ],
     imports: [
         BrowserModule,

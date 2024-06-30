@@ -4,7 +4,7 @@ metadata:
   name: books-service-api
   namespace: books-platform
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: books-service-api

@@ -22,11 +22,11 @@ class OrderItemsController < ApplicationController
     end
 
     response = self.class.put("/place-order",
-                               body: {
-                                 bookId: params[:book_id],
-                                 quantity: params[:quantity]
-                               }.to_json,
-                               headers: { 'Content-Type' => 'application/json' }
+                              body: {
+                                bookId: params[:book_id],
+                                quantity: params[:quantity]
+                              }.to_json,
+                              headers: { 'Content-Type' => 'application/json' }
     )
 
     if response.success?
@@ -105,12 +105,7 @@ class OrderItemsController < ApplicationController
   end
 
   def publish_order_event(queue_name, message)
-    connection = Bunny.new(
-      hostname: ENV['RABBITMQ_HOST'],
-      username: ENV['RABBITMQ_USERNAME'],
-      password: ENV['RABBITMQ_PASSWORD']
-    )
-    connection.start
+    connection = RabbitmqConnection.instance.connection
     channel = connection.create_channel
     queue = channel.queue(queue_name)
 

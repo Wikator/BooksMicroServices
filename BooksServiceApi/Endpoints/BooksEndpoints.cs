@@ -26,17 +26,32 @@ public static class BooksEndpoints
         return book is not null ? TypedResults.Ok(book) : TypedResults.NotFound();
     }
     
-    private static async Task<IResult> CreateAsync(BooksService service, Book book)
+    private static async Task<IResult> CreateAsync(BooksService service, BookUpsertDto bookDto)
     {
+        var book = new Book
+        {
+            Title = bookDto.Title,
+            Author = bookDto.Author,
+            Price = bookDto.Price,
+            Stock = bookDto.Stock
+        };
+        
         await service.CreateAsync(book);
         return Results.Created($"/api/books/{book.Id}", book);
     }
     
     private static async Task<Results<Ok<Book>, NotFound>> UpdateAsync(BooksService service, BookChangedPublisher publisher,
-        string id, Book book)
+        string id, BookUpsertDto bookDto)
     {
-        if (await service.GetAsync(id) is null)
+        var book = await service.GetAsync(id);
+        
+        if (book is null)
             return TypedResults.NotFound();
+
+        book.Title = bookDto.Title;
+        book.Author = bookDto.Author;
+        book.Price = bookDto.Price;
+        book.Stock = bookDto.Stock;
         
         await service.UpdateAsync(id, book);
         
@@ -44,7 +59,8 @@ public static class BooksEndpoints
         return TypedResults.Ok(book);
     }
     
-    private static async Task<Results<NoContent, NotFound>> DeleteAsync(BooksService service, BookDeletedPublisher publisher, string id)
+    private static async Task<Results<NoContent, NotFound>> DeleteAsync(BooksService service,
+        BookDeletedPublisher publisher, string id)
     {
         if (await service.GetAsync(id) is null)
             return TypedResults.NotFound();

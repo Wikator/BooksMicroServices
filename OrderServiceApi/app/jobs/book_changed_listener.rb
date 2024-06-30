@@ -2,13 +2,7 @@ class BookChangedListener < ApplicationJob
   queue_as :default
 
   def perform(*args)
-    puts 'Subscribing...'
-    connection = Bunny.new(
-      hostname: ENV['RABBITMQ_HOST'],
-      username: ENV['RABBITMQ_USERNAME'],
-      password: ENV['RABBITMQ_PASSWORD']
-    )
-    connection.start
+    connection = RabbitmqConnection.instance.connection
     channel = connection.create_channel
     queue = channel.queue('book-changed', durable: true)
 

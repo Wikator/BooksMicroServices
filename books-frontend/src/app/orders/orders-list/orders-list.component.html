@@ -1,0 +1,31 @@
+<div class="container mt-5">
+  <h1 class="text-center mb-4">Orders List</h1>
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+        @for (order of orders; track order.id) {
+          <tr>
+            <td>{{ order.title }}</td>
+            <td>{{ order.author }}</td>
+            <td>{{ order.price }}</td>
+            <td>{{ order.quantity}}</td>
+            <td class="btn-group">
+<!--              <a [routerLink]="['/books/update', order.id]" class="btn btn-primary">Edit</a>-->
+              <button (click)="delete(order.id)" class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+

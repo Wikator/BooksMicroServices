@@ -1,4 +1,5 @@
 export default interface OrderItem {
+  id: number;
   orderId: number;
   bookId: string;
   title: string;

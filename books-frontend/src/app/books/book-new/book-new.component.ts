@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {BookService} from "../../_services/book.service";
 import {Router} from "@angular/router";
-import BookUpsert from "../../_models/bookUpsert";
+import BookUpsert from "../../_models/book-upsert";
 
 @Component({
   selector: 'app-book-new',
